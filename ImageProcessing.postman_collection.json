@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "5e5967c7-fb4c-4d6e-bca0-a0ae48d9633b",
+		"name": "ImageProcessing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24359601"
+	},
+	"item": [
+		{
+			"name": "Get Hex by ApacheCommon",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Bhavesh/Downloads/Paint-red-yellow.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/image/apache/hex",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"image",
+						"apache",
+						"hex"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Testing home API ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/image/awt/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"image",
+						"awt",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hex by Java AWT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Bhavesh/Downloads/Paint-red-yellow.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/image/awt/hex",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"image",
+						"awt",
+						"hex"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hex by JavaCV",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Bhavesh/Downloads/Paint-red-yellow.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/image/javacv/hex",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"image",
+						"javacv",
+						"hex"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hex by ImageIo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Bhavesh/Downloads/Paint-red-yellow.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/image/imageio/hex",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"image",
+						"imageio",
+						"hex"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
