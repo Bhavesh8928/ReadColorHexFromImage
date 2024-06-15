@@ -21,7 +21,8 @@ public class ImgImageIOController {
     private ImgImageIOService imageService;
 
     @PostMapping("/hex")
-    public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam("image") MultipartFile image) {
+//    public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam("image") MultipartFile image) {
+        public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam("image") MultipartFile image) {
         if (image.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

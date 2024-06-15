@@ -1,5 +1,8 @@
 package com.hex.service;
 
+import com.hex.entity.ImageColor;
+import com.hex.repository.ImageColorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,9 +10,13 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ImgImageIOService {
+
+    @Autowired
+    private ImageColorRepository imageColorRepository;
 
     public Map<String, Object> extractColorsUsingImageIO(MultipartFile file) throws IOException {
         long startTime = System.currentTimeMillis();
@@ -38,11 +45,46 @@ public class ImgImageIOService {
                 .get()
                 .getKey();
 
+        // Sort the colorFrequency map in descending order based on the frequency
+        Map<String, Integer> sortedColorFrequency = colorFrequency.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())   // Remove the reverse() method to sort in ascending order
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new));
+
+        // Determine the limit based on the size of the sorted map
+        int limit = Math.min(sortedColorFrequency.size(), 100);
+
+        // Take the first 'limit' entries from the sorted map and convert them into a string separated by commas
+        String topColors = sortedColorFrequency.entrySet().stream()
+                .limit(limit)
+                .map(entry -> entry.getKey() + ":" + entry.getValue())
+                .collect(Collectors.joining(","));
+
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("mostFrequentColor", mostFrequentColor);
         result.put("hexColors", hexColors);
         result.put("timeTaken", timeTaken);
-        result.put("colorFrequency", colorFrequency);
+        // result.put("colorFrequency", colorFrequency);   // mixed result
+        result.put("colorFrequency", sortedColorFrequency);   // sorted descending order result
+
+        // Create a new ImageColor entity and set its fields
+        ImageColor imageColor = new ImageColor();
+        imageColor.setImageName(file.getOriginalFilename()); // replace with your image name
+        imageColor.setMostFrequentColor(mostFrequentColor);
+        imageColor.setHexColor(topColors);
+        imageColor.setTimeTaken(timeTaken);
+
+        // Save the ImageColor entity to the database and capture the returned entity
+        ImageColor savedImageColor = imageColorRepository.save(imageColor);
+
+        // Print the saved entity to the console
+        System.out.println("Image Name : " + savedImageColor.getImageName());
+        System.out.println("Most Frequent Color : " + savedImageColor.getMostFrequentColor());
+        System.out.println("Hex Colors : " + savedImageColor.getHexColor());
+        System.out.println("Time Taken : " + savedImageColor.getTimeTaken());
 
         tempFile.delete();
         return result;
